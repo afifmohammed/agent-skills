@@ -1,6 +1,8 @@
 # Agent Workflow Skills
 
-A set of Claude Code skills for planning, reviewing, and implementing features through structured agent workflows. Designed for cross-session execution where artifacts are the only communication channel between agents.
+A set of reusable agent skills for planning, reviewing, and implementing features through structured workflows. Designed for cross-session execution where artifacts are the only communication channel between agents.
+
+These skills follow the [Agent Skills specification](https://agentskills.io) and work with any CLI that supports it, including Claude Code, Gemini CLI, GitHub Copilot, and OpenAI Codex CLI.
 
 ## Skills
 
@@ -10,21 +12,49 @@ A set of Claude Code skills for planning, reviewing, and implementing features t
 | `w-implement-plan` | Implements a feature from planning artifacts. Prefers `hand-off.md`, accepts `plan.md`, uses `spec.md` as intent context. |
 | `w-plan-review` | Reviews a plan for feasibility, risks, compatibility, and validation strategy. Used by `w-plan-a-feature` during its review phase. |
 | `w-code-review` | Reviews code changes from a diff, branch, or file set. Findings-first, evidence-based. |
-| `w-architecture-review` | Reviews structural decisions — boundaries, dependency direction, system shape, extensibility. |
+| `w-architecture-review` | Reviews structural decisions -- boundaries, dependency direction, system shape, extensibility. |
 | `w-pressure-test` | Stress-tests a codebase-local claim by building the counter-case before the supporting case. |
+
+## Installation
+
+Clone the repo and run the install script:
+
+```bash
+git clone <repo-url> && cd agent-skills
+./install.sh
+```
+
+This symlinks every skill into the user-level skills directory for each supported CLI:
+
+| CLI | Install path |
+|-----|-------------|
+| Claude Code | `~/.claude/skills/` |
+| Gemini CLI | `~/.gemini/skills/` |
+| Cross-tool | `~/.agents/skills/` |
+
+Because these are symlinks, pulling updates takes effect immediately -- no reinstall needed.
+
+### Manual installation
+
+Copy or symlink individual skill folders from `skills/` into the appropriate path for your CLI:
+
+```bash
+# Example: install a single skill for Claude Code
+ln -s "$(pwd)/skills/w-code-review" ~/.claude/skills/w-code-review
+```
 
 ## How it works
 
 ### Planning and implementation are separate sessions
 
-`w-plan-a-feature` runs in one session and produces three artifacts. `w-implement-plan` runs in a later session and consumes them. The artifacts are the only contract between the two — there is no shared conversation context.
+`w-plan-a-feature` runs in one session and produces three artifacts. `w-implement-plan` runs in a later session and consumes them. The artifacts are the only contract between the two -- there is no shared conversation context.
 
 ```
 Session 1: w-plan-a-feature
-  Interview → spec.md → plan.md → review → hand-off.md
+  Interview -> spec.md -> plan.md -> review -> hand-off.md
 
 Session 2: w-implement-plan
-  hand-off.md → scope → implement → verify → closeout
+  hand-off.md -> scope -> implement -> verify -> closeout
 ```
 
 ### Artifact model
@@ -46,7 +76,7 @@ When artifacts disagree:
 
 ### Review family
 
-`w-plan-review`, `w-code-review`, and `w-architecture-review` share the same methodology — budgeted verification, evidence-based findings, early exit when findings are clear — but differ in their review lenses. They are intentionally aligned where the methodology overlaps and intentionally different where the review type demands it.
+`w-plan-review`, `w-code-review`, and `w-architecture-review` share the same methodology -- budgeted verification, evidence-based findings, early exit when findings are clear -- but differ in their review lenses. They are intentionally aligned where the methodology overlaps and intentionally different where the review type demands it.
 
 `w-pressure-test` is not part of the review family. It follows a different structure (counter-case before supporting case, structured evidence blocks, strict verdict constraints) because claim validation is a fundamentally different task than review.
 
@@ -54,7 +84,7 @@ When artifacts disagree:
 
 ### No context loss in handoffs
 
-Every delegation between a main agent and sub-agent requires a structured brief — not prose, a checklist. Every artifact section written by one skill is explicitly consumed by the next. The system does not rely on the agent inferring what context to pass.
+Every delegation between a main agent and sub-agent requires a structured brief -- not prose, a checklist. Every artifact section written by one skill is explicitly consumed by the next. The system does not rely on the agent inferring what context to pass.
 
 ### No silent spinning
 
@@ -62,27 +92,7 @@ Every phase that can run for multiple actions has either a budget ceiling, a che
 
 ### No long silences
 
-The agent surfaces progress at natural work boundaries — after completing a worklist item, before delegating, after a planning checkpoint, before and after verification. The user should never have to interrupt the agent to find out what is happening.
-
-## Installation
-
-Copy each skill directory into your Claude Code skills path:
-
-```
-~/.claude/skills/
-├── w-plan-a-feature/
-│   └── SKILL.md
-├── w-implement-plan/
-│   └── SKILL.md
-├── w-plan-review/
-│   └── SKILL.md
-├── w-code-review/
-│   └── SKILL.md
-├── w-architecture-review/
-│   └── SKILL.md
-└── w-pressure-test/
-    └── SKILL.md
-```
+The agent surfaces progress at natural work boundaries -- after completing a worklist item, before delegating, after a planning checkpoint, before and after verification. The user should never have to interrupt the agent to find out what is happening.
 
 ## Usage
 
