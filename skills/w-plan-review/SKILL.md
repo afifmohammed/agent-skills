@@ -27,7 +27,16 @@ Before starting, gather:
 </budget>
 
 <constraints>
-- If this review is delegated, start from the caller's brief. Do not re-discover the artifact, intent, linked context, or focus areas if they were already provided.
+- If this review is delegated, require a structured brief containing:
+  - the exact review question or decision to validate
+  - the artifact path or proposal under review
+  - the goals, constraints, and success criteria already in scope
+  - the codebase areas the caller believes are affected
+  - facts already verified by the caller
+  - the assumptions or risks that most need checking
+  - what not to re-discover or broaden into
+  - the evidence budget and expected output
+  Start from that brief. If one item is missing, note the gap and proceed conservatively rather than silently re-discovering the whole context. Do not re-discover the artifact, intent, linked context, or focus areas if they were already provided.
 - Do not spend more than 1 discovery action looking for repo-local review guidance unless the caller named a specific file.
 - Do not trust the plan's description of the current system without checking the codebase.
 - Distinguish missing information from actual design flaws. If something may be fine but is not evidenced, mark it `Unverifiable` or `Concern` rather than overstating.

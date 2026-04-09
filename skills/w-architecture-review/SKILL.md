@@ -27,7 +27,16 @@ Before starting, gather:
 </budget>
 
 <constraints>
-- If this review is delegated, start from the caller's brief. Do not re-discover the artifact, subsystem, boundary question, or focus areas if they were already provided.
+- If this review is delegated, require a structured brief containing:
+  - the exact boundary, dependency, or architecture question
+  - the plan, diff, files, or subsystem under review
+  - the projects, layers, or components believed to be affected
+  - the expected dependency direction or ownership boundary
+  - facts already verified by the caller
+  - the structural risks or uncertainties that most need checking
+  - what not to re-discover or broaden into
+  - the evidence budget and expected output
+  Start from that brief. If one item is missing, note the gap and proceed conservatively rather than silently re-discovering the whole context. Do not re-discover the artifact, subsystem, boundary question, or focus areas if they were already provided.
 - Do not spend more than 1 discovery action looking for repo-local review guidance unless the caller named a specific file.
 - Separate structural issues from local implementation bugs. Do not let diff noise crowd out system-shape concerns.
 - Verify how the system is currently wired before judging the proposed or implemented architecture.

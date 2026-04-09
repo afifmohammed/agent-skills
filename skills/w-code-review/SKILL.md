@@ -27,7 +27,15 @@ Before starting, gather:
 </budget>
 
 <constraints>
-- If this review is delegated, start from the caller's brief. Do not re-discover the diff, artifact, linked plan, or focus areas if they were already provided.
+- If this review is delegated, require a structured brief containing:
+  - the exact review question or focus
+  - the diff, branch, or changed files under review
+  - any linked plan, issue, or claimed intent
+  - the behavioral surfaces or risks already identified
+  - facts already verified by the caller
+  - what not to re-discover or broaden into
+  - the evidence budget and expected output
+  Start from that brief. If one item is missing, note the gap and proceed conservatively rather than silently re-discovering the whole context. Do not re-discover the diff, artifact, linked plan, or focus areas if they were already provided.
 - Do not spend more than 1 discovery action looking for repo-local review guidance unless the caller named a specific file.
 - Findings are the primary output. Do not pad the review with low-signal commentary.
 - Prioritize bugs, regressions, compatibility risks, and missing validation over style notes.
