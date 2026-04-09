@@ -1,0 +1,1 @@
+Observed review sessions were spending time re-discovering context after delegation. This change standardizes the brief fields across review skills so subagents inherit the question, verified facts, scope boundaries, and evidence budget instead of starting from a broad rediscovery pass.
