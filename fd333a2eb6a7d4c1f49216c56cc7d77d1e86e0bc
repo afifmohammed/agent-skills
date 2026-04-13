@@ -1,0 +1,1 @@
+Adds a standalone repo-level reference for assessing state models before changing any SKILL.md files. Captures working heuristics on role, fit, modeling rules, and review of Mermaid state diagrams, including explicit guidance on poor fit cases and the risk of creating a second competing control surface.
