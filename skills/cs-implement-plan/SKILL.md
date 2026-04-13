@@ -48,13 +48,10 @@ Do not imply completion if any required verification step was skipped or blocked
 ```mermaid
 stateDiagram-v2
     [*] --> Intake
-    Intake --> HumanInput: missing contract / artifact unclear
     Intake --> Scope: contract established
 
-    Scope --> HumanInput: artifact conflict / execution boundary unclear
     Scope --> Implement: work boundary + verification stack ready
 
-    Implement --> HumanInput: blocker / required deviation
     Implement --> VerifyPlanned: worklist complete
 
     VerifyPlanned --> Fix: planned check fails
@@ -69,15 +66,12 @@ stateDiagram-v2
     Fix --> VerifyPlanned: fix applied to planned checks
     Fix --> VerifyBuild: fix applied to build
     Fix --> VerifyTests: fix applied to tests
-    Fix --> HumanInput: blocker / repeated failure / required deviation
-
-    HumanInput --> Intake: clarified contract
-    HumanInput --> Scope: clarified scope
-    HumanInput --> Implement: clarified implementation blocker
     Closeout --> [*]
 ```
 
-The phases below are the execution driver. The state model above is a routing reference: `VerifyPlanned`, `VerifyBuild`, `VerifyTests`, and `Fix` are substeps inside the `Verify` phase, and `HumanInput` represents any point where execution pauses for user input.
+The phases below are the execution driver. The state model above is a routing reference: `VerifyPlanned`, `VerifyBuild`, `VerifyTests`, and `Fix` are substeps inside the `Verify` phase.
+
+User input is a cross-cutting pause mechanic, not a standalone state in the diagram. Any state may pause when stop conditions require it. After clarification, resume from the originating phase or verification state unless the new information materially changes scope or verification intent.
 
 ## State Semantics
 
@@ -86,21 +80,21 @@ The phases below are the execution driver. The state model above is a routing re
 - Entry: user supplied an artifact path or implementation request
 - Actions: identify artifact type, load sibling artifacts, establish the primary contract
 - Success exit: primary artifact and required siblings are loaded
-- Human exit: artifact type cannot be determined safely, or only `spec.md` exists
+- Pause exit: artifact type cannot be determined safely, or only `spec.md` exists
 
 ### Scope
 
 - Entry: execution contract established
 - Actions: extract fixed decisions, ordered work, likely starting files, and verification expectations
 - Success exit: work boundary and verification stack are explicit enough to start coding
-- Human exit: artifacts conflict or a load-bearing requirement is still missing
+- Pause exit: artifacts conflict or a load-bearing requirement is still missing
 
 ### Implement
 
 - Entry: execution-ready work boundary exists
 - Actions: execute the ordered worklist without revisiting fixed decisions
 - Success exit: in-scope implementation work is complete enough to verify
-- Human exit: completing the work would require a material deviation from the artifacts
+- Pause exit: completing the work would require a material deviation from the artifacts
 
 ### VerifyPlanned
 
@@ -108,7 +102,7 @@ The phases below are the execution driver. The state model above is a routing re
 - Actions: run artifact-specified checks first
 - Success exit: explicit planned checks pass, or none exist
 - Fix exit: a planned verification step fails and an in-scope remediation path is apparent
-- Human exit: the check cannot run, or repeated failure suggests the plan or environment is wrong
+- Pause exit: the check cannot run, or repeated failure suggests the plan or environment is wrong
 
 ### VerifyBuild
 
@@ -116,7 +110,7 @@ The phases below are the execution driver. The state model above is a routing re
 - Actions: run one repo-standard build command when a high-confidence command is known and relevant
 - Success exit: build passes, or build is explicitly `Skipped` as not relevant
 - Fix exit: build fails and the failure appears in scope
-- Human exit: build command is ambiguous, environment-blocked, or the fix-loop budget is exhausted
+- Pause exit: build command is ambiguous, environment-blocked, or the fix-loop budget is exhausted
 
 ### VerifyTests
 
@@ -124,14 +118,14 @@ The phases below are the execution driver. The state model above is a routing re
 - Actions: run one repo-standard test command when a high-confidence command is known and relevant
 - Success exit: tests pass, or tests are explicitly `Skipped` as not relevant
 - Fix exit: tests fail and the failure appears in scope
-- Human exit: test command is ambiguous, environment-blocked, or the fix-loop budget is exhausted
+- Pause exit: test command is ambiguous, environment-blocked, or the fix-loop budget is exhausted
 
 ### Fix
 
 - Entry: one verification state failed with an apparent in-scope remediation
 - Actions: make the narrowest fix that addresses the observed failure, then return to the affected verification state
 - Success exit: one focused remediation completed
-- Human exit: the next step would require scope expansion, plan drift, or the fix-loop budget would be exceeded
+- Pause exit: the next step would require scope expansion, plan drift, or the fix-loop budget would be exceeded
 
 ### Closeout
 
