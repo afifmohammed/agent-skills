@@ -14,7 +14,7 @@ A lightweight pipeline orchestrator written in C# that composes agentic steps wi
 
 ## Why
 
-Today, agent skills are invoked manually in separate sessions. The agent is the outer loop — it decides when and whether to run verification, how to interpret results, and when to stop. This means:
+Today, agent skills are invoked manually in separate sessions. The agent is the outer loop — it decides when and whether to run verification, how to interpret results, and when to stop. `skills/cs-implement-plan` is the current agent-side implementation of this pattern — its verification states, fix-loop budget, and pause exits are the manual precursors to the pipeline's deterministic equivalents. This means:
 
 - Deterministic checks (build, test, lint) depend on the agent remembering to run them and correctly interpreting their output.
 - There is no structured feedback loop — if tests fail, the agent decides on its own what that means and what to do next.

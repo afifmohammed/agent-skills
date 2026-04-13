@@ -13,6 +13,10 @@ Implement a feature from planning artifacts. Preserve the artifact contract from
 
 Use this for reviewed implementation artifacts when you want explicit state-based verification ordering, deterministic stop conditions, and a structured closeout contract.
 
+This skill replaces `w-implement-plan`. Both exist during the transition; once `cs-implement-plan` is stable, `w-implement-plan` will be removed.
+
+The verification flow this skill asks the agent to follow manually is being mechanized by the pipeline orchestrator (`docs/pipeline-orchestrator/spec.md`). That orchestrator moves deterministic verification, retry budgets, and human decision gates out of the agent and into a typed pipeline.
+
 If the user only has `spec.md`, route back to planning unless they explicitly want you to derive an implementation plan first.
 
 ## Inputs
