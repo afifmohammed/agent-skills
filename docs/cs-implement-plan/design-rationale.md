@@ -93,7 +93,12 @@ The verification substates make ordering visible, but it hasn't been measured wh
 
 The verification flow this skill asks the agent to follow manually is being mechanized by the pipeline orchestrator (`docs/pipeline-orchestrator/spec.md`). That orchestrator moves deterministic verification, retry budgets, and human decision gates out of the agent and into a typed pipeline. cs-implement-plan's verification states, fix-loop budget, and pause exits are the manual precursors to the pipeline's deterministic equivalents.
 
-Evals are the planned approach for gathering evidence on whether the deferred simplifications (removing Fix, collapsing to phase-level) are needed. Not yet started.
+Evals are the planned approach for gathering evidence on whether the deferred simplifications (removing Fix, collapsing to phase-level) are needed. Not yet started. Constraints on the eval approach:
+
+- The agent writes the evals, not the user. The user provides scenario signal (what realistic `hand-off.md` artifacts look like, what repo shapes matter).
+- Complexity must scale linearly — observable from the outside, clear pass/fail.
+- Minimal yak shaving. No manual checklist approach.
+- What the evals need to probe: does Fix routing work (return-to-caller after verification failure), do verification substates prevent skipping (all three addressed in closeout), does pause/resume work (pause on ambiguity, resume to correct state), does verification ordering hold (Planned → Build → Tests).
 
 ## Review protocol
 
