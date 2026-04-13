@@ -1,0 +1,1 @@
+Per-change process artifacts (proposal, review, field note, pass-2 review) were accumulating in field-notes/. With three or more files named by change rather than by topic, the only way to find the current state of any decision was to read everything. Consolidating into one living document gives a future agent full context from a single read.
