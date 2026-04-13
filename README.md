@@ -29,6 +29,8 @@ This symlinks every skill into the user-level skills directory for each supporte
 | CLI | Install path |
 |-----|-------------|
 | Claude Code | `~/.claude/skills/` |
+| GitHub Copilot | `~/.copilot/skills/` |
+| OpenAI Codex CLI | `~/.codex/skills/` |
 | Gemini CLI | `~/.gemini/skills/` |
 | Cross-tool | `~/.agents/skills/` |
 

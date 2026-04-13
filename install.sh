@@ -11,6 +11,8 @@ fi
 
 TARGETS=(
   "$HOME/.claude/skills"
+  "$HOME/.copilot/skills"
+  "$HOME/.codex/skills"
   "$HOME/.gemini/skills"
   "$HOME/.agents/skills"
 )
