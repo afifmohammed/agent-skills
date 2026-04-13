@@ -1,0 +1,1 @@
+Structural review identified two undocumented relationships: (1) cs-implement-plan replaces w-implement-plan as a transition, not a permanent fork, and (2) cs-implement-plan's manual verification flow is the precursor to the pipeline orchestrator's deterministic equivalent. Neither relationship was discoverable from the repo without reading this conversation.
