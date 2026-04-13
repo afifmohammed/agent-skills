@@ -84,6 +84,11 @@ with a `Verify → Implement` back-edge for remediation. This is cleaner but hid
 
 The verification substates make ordering visible, but it hasn't been measured whether agents actually skip verification more often without them. Evals against real artifacts would answer this.
 
+## Known minor issues
+
+- **"inferred" vs "repo-standard" in Verification Policy.** SKILL.md line 152 says "Prefer artifact-specified commands over inferred commands" but every other section uses "repo-standard" for the same category. One-word fix: change "inferred" to "repo-standard."
+- **Scope has no explicit budget.** Intake has a 3-action budget for artifact loading. Scope has no budget cap for verification stack discovery. In repos where build/test commands are not obvious, Scope could spend unbounded actions on discovery before implementation starts.
+
 ## Forward direction
 
 The verification flow this skill asks the agent to follow manually is being mechanized by the pipeline orchestrator (`docs/pipeline-orchestrator/spec.md`). That orchestrator moves deterministic verification, retry budgets, and human decision gates out of the agent and into a typed pipeline. cs-implement-plan's verification states, fix-loop budget, and pause exits are the manual precursors to the pipeline's deterministic equivalents.
