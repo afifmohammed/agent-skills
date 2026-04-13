@@ -10,6 +10,7 @@ These skills follow the [Agent Skills specification](https://agentskills.io) and
 |-------|---------|
 | `w-plan-a-feature` | Interviews the user, writes `spec.md`, `plan.md`, and `hand-off.md`, runs an in-session review, and stops. Does not implement. |
 | `w-implement-plan` | Implements a feature from planning artifacts. Prefers `hand-off.md`, accepts `plan.md`, uses `spec.md` as intent context. |
+| `cs-implement-plan` | Replaces `w-implement-plan` with state-based verification ordering, deterministic stop conditions, and a structured closeout contract. Transition in progress. |
 | `w-plan-review` | Reviews a plan for feasibility, risks, compatibility, and validation strategy. Used by `w-plan-a-feature` during its review phase. |
 | `w-code-review` | Reviews code changes from a diff, branch, or file set. Findings-first, evidence-based. |
 | `w-architecture-review` | Reviews structural decisions -- boundaries, dependency direction, system shape, extensibility. |
